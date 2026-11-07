@@ -20,7 +20,9 @@ main{display:flex;flex-direction:column;min-width:0}.chathead{height:76px;border
 <section class="messages" id="messages"><div class="day">HOY</div><div class="empty" id="empty"><strong>Tu conversación empieza aquí</strong>Escribe un mensaje o graba una nota de voz.</div></section>
 <div class="note">🔒 Prototipo local: todavía no envía mensajes a otra ubicación.</div>
 <form class="composer" id="form"><button class="iconbtn" type="button" id="record" title="Grabar audio">🎙</button><textarea id="message" rows="1" placeholder="Escribe un mensaje…" aria-label="Mensaje"></textarea><button class="btn" type="submit">Enviar</button></form></main></div>
-<script>
+<script type="module">
+    const app = initializeApp(firebaseConfig);
+    console.log("Firebase listo");
 const list=document.querySelector('#messages'), form=document.querySelector('#form'), input=document.querySelector('#message'), empty=document.querySelector('#empty'), rec=document.querySelector('#record');
 let items=[];try{items=JSON.parse(localStorage.getItem('conecta-messages')||'[]')}catch{}
 function render(){empty.style.display=items.length?'none':'block';list.querySelectorAll('.bubble').forEach(x=>x.remove());items.forEach(m=>{let b=document.createElement('div');b.className='bubble mine';if(m.type==='audio'){let a=document.createElement('audio');a.controls=true;a.className='audio';a.src=m.data;b.append(a)}else{b.append(document.createTextNode(m.text))}let t=document.createElement('span');t.className='time';t.textContent=m.time;b.append(t);list.append(b)});list.scrollTop=list.scrollHeight}
